@@ -15,10 +15,8 @@ RUN sed -i "s@http://.*archive.ubuntu.com@https://mirrors.sustech.edu.cn@g" /etc
 
 
 # 更新软件包并安装常用工具
-RUN apt-get -qq update --fix-missing && \
-    apt-get -qq install -y wget bzip2 ca-certificates curl git vim && \
-    apt-get -qq clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y wget bzip2 ca-certificates curl git vim
 
 # 下载并安装 Miniconda
 RUN mkdir -p ~/miniconda3 && \
