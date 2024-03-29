@@ -34,5 +34,11 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
     ~/miniconda3/bin/pip install --upgrade pip --index-url https://mirrors.sustech.edu.cn/pypi/simple && \
     ~/miniconda3/bin/pip config set global.index-url https://mirrors.sustech.edu.cn/pypi/simple
 
+# 创建一个空白的 authorized_keys 文件
+RUN touch /root/.ssh/authorized_keys
+
+# 设置权限
+RUN chmod 600 /root/.ssh/authorized_keys
+
 # 设置容器启动时的默认命令为 top -b
 CMD ["top", "-b"]
