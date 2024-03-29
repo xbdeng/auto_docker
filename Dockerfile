@@ -9,10 +9,8 @@ LABEL authors="xbdeng"
 # 设置环境变量
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-# 更换 Ubuntu 软件源镜像
-RUN sed -i "s@http://.*archive.ubuntu.com@https://mirrors.sustech.edu.cn@g" /etc/apt/sources.list && \
-    sed -i "s@http://.*security.ubuntu.com@https://mirrors.sustech.edu.cn@g" /etc/apt/sources.list
-
+# 更换 Ubuntu 软件源为阿里云镜像
+RUN sed -i 's@/archive.ubuntu.com/@/mirrors.aliyun.com/@g' /etc/apt/sources.list
 
 # 更新软件包并安装常用工具
 RUN apt-get update && \
