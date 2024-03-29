@@ -14,7 +14,7 @@ RUN sed -i 's@/archive.ubuntu.com/@/mirrors.aliyun.com/@g' /etc/apt/sources.list
 
 # 更新软件包并安装常用工具
 RUN apt-get -qq update --fix-missing && \
-    apt-get -qq install -y wget bzip2 ca-certificates curl git && \
+    apt-get -qq install -y wget bzip2 ca-certificates curl git vim && \
     apt-get -qq clean && \
     rm -rf /var/lib/apt/lists/*
 
