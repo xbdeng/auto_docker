@@ -11,7 +11,6 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # 更新软件包并安装常用工具
 RUN apt-get update && \
-    apt-get upgrade && \
     apt-get install -y wget bzip2 ca-certificates curl git vim systemctl openssh-server openssh-client
 
 # 更换 Ubuntu 软件源镜像
