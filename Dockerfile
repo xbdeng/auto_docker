@@ -39,6 +39,3 @@ RUN mkdir /root/.ssh && \
 
 # 设置权限
 RUN chmod 600 /root/.ssh/authorized_keys
-
-# 设置容器启动时的默认命令为 top -b
-CMD ["top", "-b"]
