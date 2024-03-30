@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 使用最新版本的 Ubuntu 作为基础镜像
-FROM ubuntu:latest
+FROM ubuntu:20.04
 
 # 设置作者信息
 LABEL authors="xbdeng"
