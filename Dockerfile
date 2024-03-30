@@ -7,9 +7,14 @@ LABEL authors="xbdeng"
 # 设置环境变量
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
+# Set the timezone non-interactively
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
 # 更新软件包并安装常用工具
 RUN apt-get update && \
-    apt-get install -y wget bzip2 ca-certificates curl git vim openssh-server openssh-client && \
+    apt-get install -y wget bzip2 ca-certificates curl git vim openssh-server openssh-client systemctl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -39,3 +44,6 @@ RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/s
 
 # 开放端口
 EXPOSE 22
+
+# 设置容器启动时的默认命令为 top -b
+CMD ["top", "-b"]
