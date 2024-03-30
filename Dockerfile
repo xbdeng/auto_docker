@@ -41,8 +41,7 @@ RUN mkdir -p /var/run/sshd && mkdir -p /root/.ssh && \
 EXPOSE 22
  
 # 创建一个空白的 authorized_keys 文件
-RUN mkdir /root/.ssh && \
-    touch /root/.ssh/authorized_keys
+RUN touch /root/.ssh/authorized_keys
 
 # 设置权限
 RUN chmod 600 /root/.ssh/authorized_keys
