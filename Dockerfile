@@ -35,8 +35,7 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
 
 # ssh服务
 RUN mkdir -p /var/run/sshd && mkdir -p /root/.ssh && \
-    sed -ri 's/session requried pam_loginuid.so/#session required pam_loginuid.so/g' /etc/pam.d/sshd && \
-    systemctl enable sshd
+    sed -ri 's/session requried pam_loginuid.so/#session required pam_loginuid.so/g' /etc/pam.d/sshd
 
 # 开放端口
 EXPOSE 22
