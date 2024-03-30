@@ -45,3 +45,6 @@ RUN touch /root/.ssh/authorized_keys
 
 # 设置权限
 RUN chmod 600 /root/.ssh/authorized_keys
+
+# 启动 SSH 服务
+CMD ["/usr/sbin/sshd", "-D"]
