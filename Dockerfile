@@ -10,8 +10,8 @@ LABEL authors="xbdeng"
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # 更新软件包并安装常用工具
-RUN apt-get update && \
-    apt-get install -y wget bzip2 ca-certificates curl git vim systemctl openssh-server
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y wget bzip2 ca-certificates curl git vim systemctl openssh-server openssh-client net_tools
 
 # 更换 Ubuntu 软件源镜像
 RUN sed -i "s@http://.*archive.ubuntu.com@https://mirrors.sustech.edu.cn@g" /etc/apt/sources.list && \
@@ -33,11 +33,17 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
     ~/miniconda3/bin/pip install --upgrade pip --index-url https://mirrors.sustech.edu.cn/pypi/simple && \
     ~/miniconda3/bin/pip config set global.index-url https://mirrors.sustech.edu.cn/pypi/simple
 
+# ssh服务
+RUN mkdir -p /var/run/sshd && mkdir -p /root/.ssh && \
+    sed -ri 's/session requried pam_loginuid.so/#session required pam_loginuid.so/g' /etc/pam.d/sshd && \
+    systemctl enable sshd
+
+# 开放端口
+EXPOSE 22
+ 
 # 创建一个空白的 authorized_keys 文件
 RUN mkdir /root/.ssh && \
     touch /root/.ssh/authorized_keys
-
-RUN systemctl enable ssh
 
 # 设置权限
 RUN chmod 600 /root/.ssh/authorized_keys
