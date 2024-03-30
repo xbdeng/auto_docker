@@ -33,9 +33,10 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
     ~/miniconda3/bin/pip install --upgrade pip --index-url https://mirrors.sustech.edu.cn/pypi/simple && \
     ~/miniconda3/bin/pip config set global.index-url https://mirrors.sustech.edu.cn/pypi/simple
 
-# ssh服务
-RUN mkdir -p /var/run/sshd && mkdir -p /root/.ssh && \
-    sed -ri 's/session requried pam_loginuid.so/#session required pam_loginuid.so/g' /etc/pam.d/sshd
+# 在 SSH 配置文件中允许密码登录
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # 开放端口
 EXPOSE 22
