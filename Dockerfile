@@ -1,6 +1,4 @@
-#!/bin/bash
-
-# 使用最新版本的 Ubuntu 作为基础镜像
+# 使用 Ubuntu 作为基础镜像
 FROM ubuntu:20.04
 
 # 设置作者信息
@@ -11,7 +9,9 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # 更新软件包并安装常用工具
 RUN apt-get update && \
-    apt-get install -y wget bzip2 ca-certificates curl git vim systemctl openssh-server openssh-client
+    apt-get install -y wget bzip2 ca-certificates curl git vim openssh-server openssh-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # 更换 Ubuntu 软件源镜像
 RUN sed -i "s@http://.*archive.ubuntu.com@https://mirrors.sustech.edu.cn@g" /etc/apt/sources.list && \
@@ -33,17 +33,9 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
     ~/miniconda3/bin/pip install --upgrade pip --index-url https://mirrors.sustech.edu.cn/pypi/simple && \
     ~/miniconda3/bin/pip config set global.index-url https://mirrors.sustech.edu.cn/pypi/simple
 
-# 在 SSH 配置文件中允许密码登录
+# SSH 配置
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # 开放端口
 EXPOSE 22
- 
-# 创建一个空白的 authorized_keys 文件, 设置权限
-RUN mkdir -p /root/.ssh && \
-    touch /root/.ssh/authorized_keys && \
-    chmod 600 /root/.ssh/authorized_keys
-
-# 启动 SSH 服务
-CMD ["/usr/sbin/sshd", "-D"]
