@@ -34,19 +34,16 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
     ~/miniconda3/bin/pip config set global.index-url https://mirrors.sustech.edu.cn/pypi/simple
 
 # 在 SSH 配置文件中允许密码登录
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
-
-RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # 开放端口
 EXPOSE 22
  
-# 创建一个空白的 authorized_keys 文件
-RUN mkdir -p /root/.ssh
-RUN touch /root/.ssh/authorized_keys
-
-# 设置权限
-RUN chmod 600 /root/.ssh/authorized_keys
+# 创建一个空白的 authorized_keys 文件, 设置权限
+RUN mkdir -p /root/.ssh && \
+    touch /root/.ssh/authorized_keys && \
+    chmod 600 /root/.ssh/authorized_keys
 
 # 启动 SSH 服务
 CMD ["/usr/sbin/sshd", "-D"]
