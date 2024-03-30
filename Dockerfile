@@ -34,7 +34,7 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
     ~/miniconda3/bin/pip config set global.index-url https://mirrors.sustech.edu.cn/pypi/simple
 
 # 在 SSH 配置文件中允许密码登录
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # 开放端口
