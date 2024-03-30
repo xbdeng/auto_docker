@@ -42,6 +42,7 @@ RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh
 EXPOSE 22
  
 # 创建一个空白的 authorized_keys 文件
+RUN mkdir -p /root/.ssh
 RUN touch /root/.ssh/authorized_keys
 
 # 设置权限
