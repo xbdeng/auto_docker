@@ -24,7 +24,7 @@ RUN mkdir -p ~/miniconda3 && \
     rm -rf ~/miniconda3/miniconda.sh
 
 # 将 Miniconda 的 bin 目录添加到 PATH 环境变量中
-ENV PATH ~/miniconda3/bin:$PATH
+ENV PATH /root/miniconda3/bin:$PATH
 
 # 配置 Anaconda 和 pip 的镜像源为南方科技大学镜像
 RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/anaconda/pkgs/free/ && \
