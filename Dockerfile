@@ -11,7 +11,7 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # 更新软件包并安装常用工具
 RUN apt-get update && \
-    apt-get install -y wget bzip2 ca-certificates curl git vim
+    apt-get install -y wget bzip2 ca-certificates curl git vim systemctl openssh-server
 
 # 更换 Ubuntu 软件源镜像
 RUN sed -i "s@http://.*archive.ubuntu.com@https://mirrors.sustech.edu.cn@g" /etc/apt/sources.list && \
@@ -36,6 +36,8 @@ RUN ~/miniconda3/bin/conda config --add channels https://mirrors.sustech.edu.cn/
 # 创建一个空白的 authorized_keys 文件
 RUN mkdir /root/.ssh && \
     touch /root/.ssh/authorized_keys
+
+RUN systemctl enable ssh
 
 # 设置权限
 RUN chmod 600 /root/.ssh/authorized_keys
