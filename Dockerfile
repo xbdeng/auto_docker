@@ -1,5 +1,5 @@
 # 使用 Ubuntu 作为基础镜像
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # 设置作者信息
 LABEL authors="xbdeng"
